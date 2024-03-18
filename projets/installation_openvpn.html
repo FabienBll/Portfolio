@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
+  
+  <title>Projet Proxmox</title>
+  
+  <link rel="shortcut icon" type="image/ico" href="../favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="../css/themify-icons.css">
+  
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+
+  <link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
+  
+  <link rel="stylesheet" type="text/css" href="../vendor/owl-carousel/owl.carousel.css">
+  
+  <link rel="stylesheet" type="text/css" href="../vendor/perfect-scrollbar/css/perfect-scrollbar.css">
+  
+  <link rel="stylesheet" type="text/css" href="../vendor/nice-select/css/nice-select.css">
+  
+  <link rel="stylesheet" type="text/css" href="../vendor/fancybox/css/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" type="text/css" href="../css/virtual.css">
+  
+  <link rel="stylesheet" type="text/css" href="../css/topbar.virtual.css">
+</head>
+<body class="theme-blue">
+  
+  <!-- Back to top button -->
+  <div class="btn-back_to_top">
+    <span class="ti-arrow-up"></span>
+  </div>
+  
+  <!-- Navbar -->
+  <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">Portfolio</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#main-navbar" aria-expanded="true">
+        <span class="ti-menu"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="../index.html#accueil" class="nav-link">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a href="../index.html#about" class="nav-link">À propos</a>
+          </li>
+          <li class="nav-item">
+            <a href="../index.html#projet" class="nav-link">Projets</a>
+          </li>
+          <li class="nav-item active">
+            <a href="../index.html#veille" class="nav-link">Veille Technologique</a>
+          </li>
+          <li class="nav-item">
+            <a href="../index.html#contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- End Navbar -->
+
+  <!-- Project description -->
+  <div class="vg-page page-projet">
+    <div class="container">
+      <h1>Mise en place d'un serveur OpenVPN</h1>
+      <h2 style="font-size: 24px; color: #2372d8;"><br>I. Installation et configuration sur server VPN</h2>
+      <p>- Installer le paquet d'OpenVPN : </p>
+      <p>apt update && apt install openvpn openssl -y</p>
+      <p>- Copier le dossier /usr/share/easy-rsa/ dans le dossier /etc/openvpn/ :</p>
+      <p>cp -r /usr/share/easy-rsa /etc/openvpn/</p>
+      <p>- Créer le fichier de configuration /etc/openvpn/easy-rsa/vars :</p>
+      <p>vim /etc/openvpn/easy-rsa/vars</p>
+      <p>- Ensuite, le compléter avec les informations suivantes : </p>
+      <img src="../img/work/installation_openvpn/1.png" alt="Image 1" style="max-width:100%;">
+      <p>(la ligne set_var EASYRSA_REQ_CN doit être commenté)</p>
+      <p>- Attribuer les droits d’exécution au fichier vars :</p>
+      <p>chmod +x vars</p>
+      <p>- Initialisation du PKI :</p>
+      <img src="../img/work/installation_openvpn/2.png" alt="Image 1" style="max-width:100%;">
+      <p>- Création des fichiers ca.crt :</p>
+      <img src="../img/work/installation_openvpn/3.png" alt="Image 1" style="max-width:100%;">
+      <p>- Génération du certificat et de la clé pour le serveur VPN :</p>
+      <p>cd /etc/openvpn/easy-rsa/</p>
+      <p>./easyrsa build-server-full openvpn nopass</p>
+      <u><p>Le certificat et la clé sont générés :</p></u>
+      <img src="../img/work/installation_openvpn/4.png" alt="Image 1" style="max-width:100%;">
+      <p>- Créer le certificat et la clé pour le client :</p>
+      <p>- Générer le fichier dh.pem :</p>
+      <p>./easy-rsa gen-dh</p>
+      <p>- Créer et compléter le fichier /etc/openvpn/server.conf</p>
+      <img src="../img/work/installation_openvpn/5.png" alt="Image 1" style="max-width:100%;">
+      <p>(L'image ci-dessus ne montre qu'une partie du contenu du fichier)</p>
+      <p>- Créer le groupe openvpn :</p>
+      <p>addgroup openvpn</p>
+      <p>- Créer l’utilisateur openvpn :</p>
+      <p>useradd -M openvpn -s /bin/false -g 1001</p>
+      <p>- Créer le répertoire dans lequel le processus OpenVPN sera « chrooté » :</p>
+      <p>mkdir -p /etc/openvpn/jail/tmp/</p>
+      <p>- Générer le fichier ta.key :</p>
+      <p>openvpn –genkey –secret ta.key</p>
+      <p>- Redémarrer le service OpenVPN</p>
+      <img src="../img/work/installation_openvpn/6.png" alt="Image 1" style="max-width:100%;">
+      <p>On peut également observer la présence d’une nouvelle interface réseau :</p>
+      <img src="../img/work/installation_openvpn/7.png" alt="Image 1" style="max-width:100%;">
+      <p>- Activer forwarding des paquets :</p>
+      <p>echo 1 > /proc/sys/net/ipv4/ip_forward</p>
+      <p>vim /etc/sysctl.conf</p>
+      <p>(décommenter ligne net.ipv4.ip_forward=1)</p>
+      <p>sysctl -p</p>
+      <br>
+      <h2 style="font-size: 24px; color: #2372d8;"><br>II. Configuration du Client VPN</h2>
+      <p>- Télécharger le client OpenVPN :</p>
+      <p>https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.9-I001-amd64.msi</p>
+      <p>- Installer le client</p>
+      <p>- Créer le fichier C:\User\sio\OpenVPN\client.ovpn</p>
+      <p>Ajouter dans le fichier les informations nécessaires, exemple :</p>
+      <img src="../img/work/installation_openvpn/8.png" alt="Image 1" style="max-width:100%;">
+      <p>- Transférer les fichiers de certificats et de clés dans le client via SCP</p>
+      <p>- Connexion au VPN via le client :</p>
+      <img src="../img/work/installation_openvpn/9.png" alt="Image 1" style="max-width:100%;">
+      <h2 style="font-size: 24px; color: #2372d8;"><br>Connexion établie :</h2>
+      <img src="../img/work/installation_openvpn/10.png" alt="Image 1" style="max-width:100%;">
+    </div>
+  </div>
+  <!-- End Project description -->
+
+  <!-- Footer -->
+  <div class="vg-footer">
+    <h1 class="text-center">Portfolio</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 py-3">
+          <div class="footer-info">
+            <p>Divers</p>
+            <hr class="divider">
+            <ul class="list-unstyled">
+              <li><a href="https://github.com/FabienBll">Github</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 py-3">
+          <div class="float-lg-right">
+            <p>Suivez-moi</p>
+            <hr class="divider">
+            <ul class="list-unstyled">
+              <li><a href="https://fr.linkedin.com/in/fabien-ballereau-a64812231?original_referer=https%3A%2F%2Fwww.google.com%2F">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 py-3">
+          <div class="float-lg-right">
+            <p>Contactez moi</p>
+            <hr class="divider">
+            <ul class="list-unstyled">
+              <li>fabien.ballereau@gmail.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
+        <div class="col-12">
+          <p class="text-center mb-0 mt-4">Copyright &copy;2020. Tous droits réservés | Ce template a été fait avec <span class="ti-heart fg-theme-red"></span> par <a href="https://www.macodeid.com/">MACode ID</a></p>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End footer -->
+  
+  
+<script src="../js/jquery-3.5.1.min.js"></script>
+  
+<script src="../js/bootstrap.bundle.min.js"></script>
+  
+<script src="../vendor/owl-carousel/owl.carousel.min.js"></script>
+  
+<script src="../vendor/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+  
+<script src="../vendor/isotope/isotope.pkgd.min.js"></script>
+  
+<script src="../vendor/nice-select/js/jquery.nice-select.min.js"></script>
+  
+<script src="../vendor/fancybox/js/jquery.fancybox.min.js"></script>
+
+<script src="../vendor/wow/wow.min.js"></script>
+
+<script src="../vendor/animateNumber/jquery.animateNumber.min.js"></script>
+
+<script src="../vendor/waypoints/jquery.waypoints.min.js"></script>
+
+<script src="../js/google-maps.js"></script>
+  
+<script src="../js/topbar-virtual.js"></script>
+
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script> -->
+  
+</body>
+</html>
