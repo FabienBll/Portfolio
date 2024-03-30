@@ -69,7 +69,49 @@
   <!-- Project description -->
   <div class="vg-page page-projet">
     <div class="container">
-      <h1>En cours de création...</h1>
+      <h1>Mise en place d'un serveur multimédia</h1>
+      <p>Afin de pouvoir réunir la majorité des services de streaming au même endroit et de pouvoir accéder à n'importe quel film ou série de mon choix, j'ai décider de mettre en place
+        un serveur multimédia qui se nomme Plex. Afin de pouvoir ajouter facilement n'importe quel film ou série j'ai décidé d'également mettre en place un partage via Samba.</p>
+      <h2 style="font-size: 24px; color: #2372d8;">Installation de Plex</h2>
+      <p>• Installation d’une VM sous Debian 12</p>
+      <p>• Téléchargement de Plex</p>
+      <p>wget https://downloads.plex.tv/plex-media-server-new/1.40.1.8227-c0dd5a73e/debian/plexmediaserver_1.40.1.8227-c0dd5a73e_amd64.deb</p>
+      <p>• Installation du paquet</p>
+      <p>dpkg -i plexmediaserver_1.40.1.8227-c0dd5a73e_amd64.deb</p>
+      <h2 style="font-size: 24px; color: #2372d8;">Installation et configuration de Samba</h2>
+      <p>• Installation du paquet de samba</p>
+      <p>apt update && apt install samba -y</p>
+      <p>• Activation du service samba</p>
+      <p>systemctl enable smbd</p>
+      <p>• Modification du fichier de configuration</p>
+      <p>vim etcsamba/smb.conf</p>
+      <p>Infos à ajouter :</p>
+      <img src="../img/work/serveur_multimedia/1.png" alt="Image 1" style="max-width:100%;">
+      <p>• Redémarrer le service samba</p>
+      <p>systemctl restart smbd</p>
+      <p>• Créer un utilisateur pour le partage</p>
+      <p>adduser sio</p>
+      <p>• Ajout de l'utilisateur à Samba</p>
+      <p>smbpasswd -a sio</p>
+      <p>• Créer un groupe de partage</p>
+      <p>groupadd partage</p>
+      <p>• Ajout de l'utilisateur au groupe</p>
+      <p>gpasswd -a sio partage</p>
+      <p>• Ajout des droits sur le dossier de partage</p>
+      <p>chgrp -R partage /var/lib/plexmediaserver</p>
+      <p>chmod -R g+rw /var/lib/plexmediaserver</p>
+      <h2 style="font-size: 24px; color: #2372d8;">Configuration de Plex</h2>
+      <p>• Connexion sur l'interface WEB de Plex</p>
+      <p>http://192.168.1.250:32400/</p>
+      <p>• Ajout d'une nouvelle bibliothèque</p>
+      <img src="../img/work/serveur_multimedia/2.png" alt="" style="max-width:100%;">
+      <p>• Sélection du répertoire de la bibliothèque</p>
+      <img src="../img/work/serveur_multimedia/3.png" alt="" style="max-width:100%;">
+      <p>La bibliothèque a été créée :</p>
+      <img src="../img/work/serveur_multimedia/4.png" alt="" style="max-width:100%;">
+      <h2 style="font-size: 24px; color: #2372d8;">Test d'accès au partage :</h2>
+      <img src="../img/work/serveur_multimedia/5.png" alt="" style="max-width:100%;">
+      <p>(Lors du premier accès au partage, le login de l'utilisateur de samba est demandé)</p>
     </div>
   </div>
   <!-- End Project description -->
@@ -139,8 +181,6 @@
 <script src="../js/google-maps.js"></script>
   
 <script src="../js/topbar-virtual.js"></script>
-
-<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script> -->
   
 </body>
 </html>
