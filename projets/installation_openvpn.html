@@ -78,24 +78,24 @@
       <p>- Créer le fichier de configuration /etc/openvpn/easy-rsa/vars :</p>
       <p>vim /etc/openvpn/easy-rsa/vars</p>
       <p>- Ensuite, le compléter avec les informations suivantes : </p>
-      <img src="../img/work/installation_openvpn/1.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/1.png" alt="Image 1" style="max-width:50%;">
       <p>(la ligne set_var EASYRSA_REQ_CN doit être commenté)</p>
       <p>- Attribuer les droits d’exécution au fichier vars :</p>
       <p>chmod +x vars</p>
       <p>- Initialisation du PKI :</p>
-      <img src="../img/work/installation_openvpn/2.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/2.png" alt="Image 1" style="max-width:50%;">
       <p>- Création des fichiers ca.crt :</p>
-      <img src="../img/work/installation_openvpn/3.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/3.png" alt="Image 1" style="max-width:50%;">
       <p>- Génération du certificat et de la clé pour le serveur VPN :</p>
       <p>cd /etc/openvpn/easy-rsa/</p>
       <p>./easyrsa build-server-full openvpn nopass</p>
       <u><p>Le certificat et la clé sont générés :</p></u>
-      <img src="../img/work/installation_openvpn/4.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/4.png" alt="Image 1" style="max-width:50%;">
       <p>- Créer le certificat et la clé pour le client :</p>
       <p>- Générer le fichier dh.pem :</p>
       <p>./easy-rsa gen-dh</p>
       <p>- Créer et compléter le fichier /etc/openvpn/server.conf</p>
-      <img src="../img/work/installation_openvpn/5.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/5.png" alt="Image 1" style="max-width:50%;">
       <p>(L'image ci-dessus ne montre qu'une partie du contenu du fichier)</p>
       <p>- Créer le groupe openvpn :</p>
       <p>addgroup openvpn</p>
@@ -106,9 +106,9 @@
       <p>- Générer le fichier ta.key :</p>
       <p>openvpn –genkey –secret ta.key</p>
       <p>- Redémarrer le service OpenVPN</p>
-      <img src="../img/work/installation_openvpn/6.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/6.png" alt="Image 1" style="max-width:50%;">
       <p>On peut également observer la présence d’une nouvelle interface réseau :</p>
-      <img src="../img/work/installation_openvpn/7.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/7.png" alt="Image 1" style="max-width:50%;">
       <p>- Activer forwarding des paquets :</p>
       <p>echo 1 > /proc/sys/net/ipv4/ip_forward</p>
       <p>vim /etc/sysctl.conf</p>
@@ -121,12 +121,12 @@
       <p>- Installer le client</p>
       <p>- Créer le fichier C:\User\sio\OpenVPN\client.ovpn</p>
       <p>Ajouter dans le fichier les informations nécessaires, exemple :</p>
-      <img src="../img/work/installation_openvpn/8.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/8.png" alt="Image 1" style="max-width:50%;">
       <p>- Transférer les fichiers de certificats et de clés dans le client via SCP</p>
       <p>- Connexion au VPN via le client :</p>
-      <img src="../img/work/installation_openvpn/9.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/9.png" alt="Image 1" style="max-width:25%;">
       <h2 style="font-size: 24px; color: #2372d8;"><br>Connexion établie :</h2>
-      <img src="../img/work/installation_openvpn/10.png" alt="Image 1" style="max-width:100%;">
+      <img src="../img/work/installation_openvpn/10.png" alt="Image 1" style="max-width:50%;">
     </div>
   </div>
   <!-- End Project description -->
